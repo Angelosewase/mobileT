@@ -10,7 +10,7 @@ import {
 import { fetchWordDefinition } from "../services/dictionaryApi";
 import type { DictionaryEntry, DictionaryError } from "../types/dictionary";
 import { errorNotification, successNotification } from "../utils/haptics";
-import { isValidWord } from "../utils/validation";
+import { getValidationError } from "../utils/validation";
 
 interface GamificationStats {
   totalSearches: number;
@@ -119,10 +119,11 @@ export function DictionaryProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    if (!isValidWord(trimmed)) {
+    const validationError = getValidationError(trimmed);
+    if (validationError) {
       setError({
         code: "UNKNOWN",
-        message: "Please enter a valid English word (letters only).",
+        message: validationError,
       });
       void errorNotification();
       return;

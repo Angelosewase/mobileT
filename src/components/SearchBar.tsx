@@ -1,7 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { useMemo, useState } from "react";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import Animated, {
+  FadeIn,
   useAnimatedStyle,
   useSharedValue,
   withSequence,
@@ -11,11 +12,16 @@ import Animated, {
 
 import { useTheme } from "../context/ThemeContext";
 import { lightImpact, mediumImpact } from "../utils/haptics";
-import { getValidationError } from "../utils/validation";
+import {
+  extractFirstWord,
+  getSearchSuggestions,
+  getValidationError,
+} from "../utils/validation";
 
 interface SearchBarProps {
   initialValue?: string;
   loading?: boolean;
+  history?: string[];
   onSearch: (word: string) => void;
 }
 
@@ -24,6 +30,7 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export function SearchBar({
   initialValue = "",
   loading = false,
+  history = [],
   onSearch,
 }: SearchBarProps) {
   const { colors } = useTheme();
@@ -61,8 +68,18 @@ export function SearchBar({
     );
   };
 
-  const handleSearch = () => {
-    const trimmed = value.trim();
+  const suggestions = useMemo(
+    () => getSearchSuggestions(value, history),
+    [value, history],
+  );
+
+  const firstWordSuggestion = useMemo(
+    () => (/\s/.test(value.trim()) ? extractFirstWord(value) : null),
+    [value],
+  );
+
+  const handleSearch = (word?: string) => {
+    const trimmed = (typeof word === "string" ? word : value).trim();
     const error = getValidationError(trimmed);
 
     if (error) {
@@ -74,6 +91,13 @@ export function SearchBar({
     setValidationError(null);
     void mediumImpact();
     onSearch(trimmed);
+  };
+
+  const handleSuggestionPress = (word: string) => {
+    setValue(word);
+    setValidationError(null);
+    void lightImpact();
+    handleSearch(word);
   };
 
   const handleTextChange = (text: string) => {
@@ -107,7 +131,7 @@ export function SearchBar({
         <TextInput
           value={value}
           onChangeText={handleTextChange}
-          onSubmitEditing={handleSearch}
+          onSubmitEditing={() => handleSearch()}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="Type a word to explore..."
@@ -136,16 +160,69 @@ export function SearchBar({
       </Animated.View>
 
       {validationError ? (
-        <View className="flex-row items-center gap-2 px-1">
-          <Ionicons name="alert-circle" size={16} color={colors.error} />
-          <Text style={{ color: colors.error }} className="text-sm">
-            {validationError}
-          </Text>
+        <View className="gap-2 px-1">
+          <View className="flex-row items-center gap-2">
+            <Ionicons name="alert-circle" size={16} color={colors.error} />
+            <Text style={{ color: colors.error }} className="flex-1 text-sm">
+              {validationError}
+            </Text>
+          </View>
+          {firstWordSuggestion && validationError.includes("no spaces") ? (
+            <Pressable
+              onPress={() => handleSuggestionPress(firstWordSuggestion)}
+              style={{
+                backgroundColor: `${colors.lavender}50`,
+                borderColor: colors.purple,
+              }}
+              className="flex-row items-center gap-2 self-start rounded-full border px-3 py-1.5"
+              accessibilityLabel={`Search for ${firstWordSuggestion} instead`}
+            >
+              <Ionicons name="arrow-forward-circle" size={16} color={colors.purple} />
+              <Text style={{ color: colors.purple }} className="text-sm font-medium">
+                Search for &quot;{firstWordSuggestion}&quot; instead
+              </Text>
+            </Pressable>
+          ) : null}
         </View>
       ) : null}
 
+      {isFocused && value.trim().length > 0 && suggestions.length > 0 && !validationError ? (
+        <Animated.View entering={FadeIn.duration(200)} className="gap-2">
+          <Text
+            style={{ color: colors.textTertiary }}
+            className="px-1 text-xs font-medium uppercase tracking-wide"
+          >
+            Suggestions
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ gap: 8 }}
+          >
+            {suggestions.map((word) => (
+              <Pressable
+                key={word}
+                onPress={() => handleSuggestionPress(word)}
+                style={{
+                  backgroundColor: colors.surface,
+                  borderColor: colors.border,
+                }}
+                className="flex-row items-center gap-2 rounded-full border px-3 py-2"
+                accessibilityLabel={`Search for ${word}`}
+              >
+                <Ionicons name="search" size={14} color={colors.purple} />
+                <Text style={{ color: colors.text }} className="text-sm font-medium capitalize">
+                  {word}
+                </Text>
+              </Pressable>
+            ))}
+          </ScrollView>
+        </Animated.View>
+      ) : null}
+
       <AnimatedPressable
-        onPress={handleSearch}
+        onPress={() => handleSearch()}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         disabled={loading}

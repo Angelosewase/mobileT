@@ -19,6 +19,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useUser } from "../context/UserContext";
 import { getDailyFact, getWordOfTheDay } from "../services/wordOfTheDay";
 import { lightImpact } from "../utils/haptics";
+import { QUICK_SEARCH_WORDS } from "../utils/validation";
 
 export default function Index() {
   const { colors } = useTheme();
@@ -171,6 +172,7 @@ export default function Index() {
             key={query}
             initialValue={query}
             loading={loading}
+            history={history}
             onSearch={searchWord}
           />
         </Animated.View>
@@ -398,7 +400,7 @@ export default function Index() {
                     Try these words
                   </Text>
                   <View className="flex-row flex-wrap justify-center gap-2">
-                    {["eloquent", "ephemeral", "resilient", "luminous"].map((word) => (
+                    {QUICK_SEARCH_WORDS.map((word) => (
                       <Pressable
                         key={word}
                         onPress={() => handleHistoryItemPress(word)}
