@@ -1,42 +1,62 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { ErrorState } from "../components/ErrorState";
+import { SearchBar } from "../components/SearchBar";
+import { WordDetails } from "../components/WordDetails";
+import { useDictionary } from "../context/DictionaryContext";
+
 export default function Index() {
+  const { query, entries, loading, error, searchWord, retry } = useDictionary();
+
   return (
-    <SafeAreaView className="flex-1 bg-slate-100">
-      <View className="flex-1 items-center justify-center gap-6 px-6">
-        <View className="items-center gap-2">
-          <Text className="text-3xl font-bold text-blue-600">
-            NativeWind works
-          </Text>
-          <Text className="text-center text-base text-slate-600">
-            If this text is blue and centered on a light gray background, your
-            setup is correct.
+    <SafeAreaView className="flex-1 bg-white" edges={["bottom"]}>
+      <ScrollView
+        className="flex-1"
+        contentContainerClassName="gap-6 px-4 pb-8 pt-2"
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="gap-2">
+          <Text className="text-2xl font-bold text-black">Look up a word</Text>
+          <Text className="text-base text-verbivy-text-secondary">
+            Search the English dictionary and hear pronunciations when available.
           </Text>
         </View>
 
-        <View className="w-full max-w-sm gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <Text className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-            Test utilities
-          </Text>
-          <View className="flex-row flex-wrap gap-2">
-            <View className="rounded-full bg-emerald-100 px-3 py-1">
-              <Text className="text-sm font-medium text-emerald-800">flex</Text>
-            </View>
-            <View className="rounded-full bg-amber-100 px-3 py-1">
-              <Text className="text-sm font-medium text-amber-800">colors</Text>
-            </View>
-            <View className="rounded-full bg-violet-100 px-3 py-1">
-              <Text className="text-sm font-medium text-violet-800">spacing</Text>
-            </View>
+        <SearchBar
+          key={query}
+          initialValue={query}
+          loading={loading}
+          onSearch={searchWord}
+        />
+
+        {loading ? (
+          <View className="items-center gap-3 py-10">
+            <ActivityIndicator size="large" color="#000000" />
+            <Text className="text-base text-verbivy-text-secondary">
+              Fetching definition...
+            </Text>
           </View>
-          <Text className="text-sm text-slate-500">
-            Edit{" "}
-            <Text className="font-mono text-xs text-slate-700">src/app/index.tsx</Text>{" "}
-            and change any className to verify hot reload.
-          </Text>
-        </View>
-      </View>
+        ) : null}
+
+        {!loading && error ? <ErrorState error={error} onRetry={retry} /> : null}
+
+        {!loading && !error && entries ? (
+          <WordDetails entries={entries} />
+        ) : null}
+
+        {!loading && !error && !entries ? (
+          <View className="rounded-2xl bg-verbivy-lavender/50 px-5 py-6">
+            <Text className="text-base font-semibold text-black">
+              Start exploring
+            </Text>
+            <Text className="mt-2 text-base leading-6 text-verbivy-text-secondary">
+              Enter a word above to see its meaning, part of speech, examples,
+              and pronunciation.
+            </Text>
+          </View>
+        ) : null}
+      </ScrollView>
     </SafeAreaView>
   );
 }
