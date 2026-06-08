@@ -1,5 +1,17 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
+
+import { useTheme } from "../context/ThemeContext";
+import { lightImpact, mediumImpact } from "../utils/haptics";
+import { getValidationError } from "../utils/validation";
 
 interface SearchBarProps {
   initialValue?: string;
@@ -7,60 +19,154 @@ interface SearchBarProps {
   onSearch: (word: string) => void;
 }
 
-export function SearchBar({ initialValue = "", loading = false, onSearch }: SearchBarProps) {
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+export function SearchBar({
+  initialValue = "",
+  loading = false,
+  onSearch,
+}: SearchBarProps) {
+  const { colors } = useTheme();
   const [value, setValue] = useState(initialValue);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const buttonScale = useSharedValue(1);
+  const inputShake = useSharedValue(0);
+
+  const buttonAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: buttonScale.value }],
+  }));
+
+  const inputAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: inputShake.value }],
+  }));
+
+  const handlePressIn = () => {
+    buttonScale.value = withSpring(0.96, { damping: 15, stiffness: 400 });
+    void lightImpact();
+  };
+
+  const handlePressOut = () => {
+    buttonScale.value = withSpring(1, { damping: 15, stiffness: 400 });
+  };
+
+  const shakeInput = () => {
+    inputShake.value = withSequence(
+      withTiming(-10, { duration: 50 }),
+      withTiming(10, { duration: 50 }),
+      withTiming(-10, { duration: 50 }),
+      withTiming(10, { duration: 50 }),
+      withTiming(0, { duration: 50 }),
+    );
+  };
 
   const handleSearch = () => {
     const trimmed = value.trim();
+    const error = getValidationError(trimmed);
 
-    if (!trimmed) {
-      setValidationError("Please enter a word to search.");
+    if (error) {
+      setValidationError(error);
+      shakeInput();
       return;
     }
 
     setValidationError(null);
+    void mediumImpact();
     onSearch(trimmed);
+  };
+
+  const handleTextChange = (text: string) => {
+    setValue(text);
+    if (validationError) {
+      setValidationError(null);
+    }
   };
 
   return (
     <View className="gap-3">
-      <View className="rounded-2xl border border-verbivy-border bg-white px-4 py-3">
+      <Animated.View
+        style={[
+          inputAnimatedStyle,
+          {
+            backgroundColor: colors.surface,
+            borderColor: isFocused
+              ? colors.purple
+              : validationError
+                ? colors.error
+                : colors.border,
+          },
+        ]}
+        className="flex-row items-center gap-3 rounded-2xl border-2 px-4 py-3"
+      >
+        <Ionicons
+          name="search"
+          size={20}
+          color={isFocused ? colors.purple : colors.textTertiary}
+        />
         <TextInput
           value={value}
-          onChangeText={(text) => {
-            setValue(text);
-            if (validationError) {
-              setValidationError(null);
-            }
-          }}
+          onChangeText={handleTextChange}
           onSubmitEditing={handleSearch}
-          placeholder="Search for a word..."
-          placeholderTextColor="#AEAEB2"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          placeholder="Type a word to explore..."
+          placeholderTextColor={colors.textTertiary}
           autoCapitalize="none"
           autoCorrect={false}
           returnKeyType="search"
           editable={!loading}
-          className="text-base text-black"
+          style={{ color: colors.text }}
+          className="flex-1 text-base"
           accessibilityLabel="Word search input"
         />
-      </View>
+        {value.length > 0 && !loading && (
+          <Pressable
+            onPress={() => {
+              setValue("");
+              setValidationError(null);
+              void lightImpact();
+            }}
+            hitSlop={8}
+            accessibilityLabel="Clear search"
+          >
+            <Ionicons name="close-circle" size={20} color={colors.textTertiary} />
+          </Pressable>
+        )}
+      </Animated.View>
 
       {validationError ? (
-        <Text className="text-sm text-verbivy-error">{validationError}</Text>
+        <View className="flex-row items-center gap-2 px-1">
+          <Ionicons name="alert-circle" size={16} color={colors.error} />
+          <Text style={{ color: colors.error }} className="text-sm">
+            {validationError}
+          </Text>
+        </View>
       ) : null}
 
-      <Pressable
+      <AnimatedPressable
         onPress={handleSearch}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
         disabled={loading}
         accessibilityRole="button"
         accessibilityLabel="Search dictionary"
-        className={`h-14 items-center justify-center rounded-full bg-black ${loading ? "opacity-40" : "active:opacity-90"}`}
+        style={[buttonAnimatedStyle, { opacity: loading ? 0.4 : 1 }]}
+        className="h-14 flex-row items-center justify-center gap-2 rounded-full bg-black"
       >
+        {loading ? (
+          <View className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+        ) : (
+          <Ionicons name="search" size={20} color="#FFFFFF" />
+        )}
         <Text className="text-base font-semibold text-white">
-          {loading ? "Searching..." : "Search"}
+          {loading ? "Searching..." : "Search Dictionary"}
         </Text>
-      </Pressable>
+      </AnimatedPressable>
+
+      <Text style={{ color: colors.textTertiary }} className="text-center text-sm">
+        Explore definitions, examples, and pronunciations
+      </Text>
     </View>
   );
 }

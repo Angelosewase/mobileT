@@ -27,10 +27,11 @@
     "plugins": [
       "expo-audio",
       "expo-router",
+      "expo-secure-store",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#9B7FD4",
           "android": {
             "image": "./assets/images/splash-icon.png",
             "imageWidth": 76

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // NOTE: Update this to include the paths to all files that contain Nativewind classes.
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -19,6 +19,15 @@ module.exports = {
           "text-tertiary": "#AEAEB2",
           error: "#FF3B30",
           success: "#34C759",
+          warning: "#FF9500",
+          // Dark mode variants
+          "dark-bg": "#000000",
+          "dark-surface": "#1C1C1E",
+          "dark-elevated": "#2C2C2E",
+          "dark-border": "#38383A",
+          "dark-lavender": "#2D2640",
+          "dark-mint": "#1D3029",
+          "dark-peach": "#3D2D25",
         },
       },
       borderRadius: {

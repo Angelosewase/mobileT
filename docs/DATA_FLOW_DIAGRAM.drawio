@@ -1,0 +1,277 @@
+<mxfile host="app.diagrams.net" modified="2026-06-08T12:00:00.000Z" agent="LexiTech Dictionary App" version="21.0.0">
+  <diagram name="System Flow Diagram" id="lexitech-sfd">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="LexiTech Dictionary App — System Flow Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="350" y="20" width="700" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- App Boundary -->
+        <mxCell id="app_boundary" value="React Native / Expo Application" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8F8FA;strokeColor=#9B7FD4;strokeWidth=2;dashed=1;verticalAlign=top;fontSize=13;fontStyle=1;fontColor=#6B6B70;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="1000" height="780" as="geometry"/>
+        </mxCell>
+
+        <!-- External: User -->
+        <mxCell id="user" value="User" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="420" width="110" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- External: API -->
+        <mxCell id="api" value="Free Dictionary&#xa;API" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE8D9;strokeColor=#FF9500;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="420" width="130" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ SWIMLANE 1: ONBOARDING ═══ -->
+        <mxCell id="lane1" value="① Onboarding Flow" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=1;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#1D3029;spacingTop=6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="220" y="110" width="960" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1" value="1.0&#xa;Onboarding&#xa;(UI Screens)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="150" width="130" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ctx_user" value="UserContext&#xa;(completeOnboarding)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9B7FD4;strokeWidth=2;fontSize=11;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="155" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ds1" value="D1 | User Profile&#xa;(SecureStore)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="165" width="180" height="45" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ SWIMLANE 2: THEME ═══ -->
+        <mxCell id="lane2" value="② Theme Preferences" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=1;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#2D2640;spacingTop=6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="220" y="260" width="960" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p7" value="7.0&#xa;Theme Toggle&#xa;(Header UI)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="295" width="130" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ctx_theme" value="ThemeContext&#xa;(setMode)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9B7FD4;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="500" y="295" width="160" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ds3" value="D2 | Theme Settings&#xa;(SecureStore)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="305" width="180" height="45" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ SWIMLANE 3: SEARCH (PRIMARY FLOW) ═══ -->
+        <mxCell id="lane3" value="③ Word Search &amp; Display (Primary Flow)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE8D9;strokeColor=#FF9500;strokeWidth=1;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#3D2D25;spacingTop=6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="220" y="390" width="960" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p2" value="2.0&#xa;Search &amp;&#xa;Validate" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="440" width="110" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ctx_dict" value="DictionaryContext&#xa;(searchWord)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF9500;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="420" y="445" width="150" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p3" value="3.0&#xa;Fetch&#xa;Definition" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="440" width="110" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="svc_api" value="dictionaryApi.ts&#xa;(axios HTTP GET)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#FF9500;strokeWidth=1;fontSize=10;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="455" width="130" height="45" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p4" value="4.0&#xa;Display&#xa;Results" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="440" width="110" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ui_word" value="WordDetails&#xa;SearchBar&#xa;ErrorState" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34C759;strokeWidth=1;fontSize=10;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="960" y="530" width="110" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ SWIMLANE 4: AUDIO ═══ -->
+        <mxCell id="lane4" value="④ Audio Playback" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=1;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#1D3029;spacingTop=6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="220" y="610" width="460" height="110" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p5" value="5.0&#xa;Play Audio" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="645" width="110" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ui_audio" value="AudioButton&#xa;+ AudioWave&#xa;(expo-audio)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#34C759;strokeWidth=1;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="520" y="645" width="130" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ SWIMLANE 5: SESSION DATA ═══ -->
+        <mxCell id="lane5" value="⑤ Session State (In-Memory)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F8F8FA;strokeColor=#6B6B70;strokeWidth=1;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#333333;spacingTop=6;opacity=40;" vertex="1" parent="1">
+          <mxGeometry x="700" y="610" width="480" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p6" value="6.0&#xa;Manage&#xa;History" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="645" width="110" height="60" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ds2" value="D3 | Search History&#xa;(DictionaryContext)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#F8F8FA;strokeColor=#6B6B70;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="650" width="195" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ds4" value="D4 | Gamification Stats&#xa;(DictionaryContext)" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#F8F8FA;strokeColor=#6B6B70;strokeWidth=2;fontSize=11;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="695" width="195" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- Provider Stack (left sidebar inside app) -->
+        <mxCell id="providers" value="Provider Stack&#xa;&#xa;ThemeProvider&#xa;  └ UserProvider&#xa;       └ DictionaryProvider&#xa;            └ Screens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9B7FD4;strokeWidth=2;fontSize=10;align=left;spacingLeft=10;verticalAlign=top;spacingTop=8;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="740" width="200" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E5E5EA;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="740" width="280" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend_title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="745" width="280" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend1" value="External Entity" style="shape=rectangle;rounded=1;whiteSpace=wrap;html=1;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="475" y="770" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend2" value="Process" style="ellipse;whiteSpace=wrap;html=1;fillColor=#D4F0E4;strokeColor=#34C759;strokeWidth=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="580" y="770" width="70" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend3" value="Context / Service" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9B7FD4;strokeWidth=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="665" y="770" width="65" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend4" value="Persistent Store" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#E8DFF5;strokeColor=#9B7FD4;strokeWidth=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="475" y="800" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend5" value="In-Memory Store" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=#F8F8FA;strokeColor=#6B6B70;strokeWidth=1;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="580" y="800" width="90" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="legend6" value="— Solid = request  - - Dashed = response" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#6B6B70;" vertex="1" parent="1">
+          <mxGeometry x="475" y="828" width="250" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ FLOWS: ONBOARDING ═══ -->
+        <mxCell id="f1" value="Profile data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9B7FD4;strokeWidth=2;fontSize=10;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="p1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="180"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f2" value="Save profile" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p1" target="ctx_user">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f2b" value="Persist" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ctx_user" target="ds1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ FLOWS: THEME ═══ -->
+        <mxCell id="f15" value="Toggle theme" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#9B7FD4;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="p7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="325"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f14" value="Mode" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p7" target="ctx_theme">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f14b" value="Save" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ctx_theme" target="ds3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ FLOWS: SEARCH (main pipeline) ═══ -->
+        <mxCell id="f3" value="Search query" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9500;strokeWidth=2;fontSize=10;exitX=1;exitY=0.7;entryX=0;entryY=0.5;" edge="1" parent="1" source="user" target="p2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="475"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f3b" value="Validated word" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p2" target="ctx_dict">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f4" value="Fetch request" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="ctx_dict" target="p3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f5" value="HTTP GET" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9500;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p3" target="svc_api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f5b" value="Request" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9500;strokeWidth=2;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="svc_api" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f6" value="JSON response" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF9500;strokeWidth=1;fontSize=10;dashed=1;exitX=0;exitY=0.7;entryX=1;entryY=0.7;" edge="1" parent="1" source="api" target="p3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1220" y="520"/>
+              <mxPoint x="720" y="520"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f7" value="Word data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p3" target="p4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f8" value="Definitions, examples" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34C759;strokeWidth=2;fontSize=10;dashed=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" edge="1" parent="1" source="p4" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1015" y="580"/>
+              <mxPoint x="1015" y="820"/>
+              <mxPoint x="150" y="820"/>
+              <mxPoint x="150" y="450"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f7b" value="Render" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="p4" target="ui_word">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ═══ FLOWS: HISTORY & STATS ═══ -->
+        <mxCell id="f11" value="On success" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="ctx_dict" target="p6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="600"/>
+              <mxPoint x="785" y="600"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f12" value="Store / read" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.3;" edge="1" parent="1" source="p6" target="ds2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f16" value="Update stats" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.7;" edge="1" parent="1" source="p6" target="ds4">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f13" value="History list" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#6B6B70;strokeWidth=1;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.8;" edge="1" parent="1" source="ds2" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1150" y="678"/>
+              <mxPoint x="1150" y="860"/>
+              <mxPoint x="150" y="860"/>
+              <mxPoint x="150" y="468"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ═══ FLOWS: AUDIO ═══ -->
+        <mxCell id="f9" value="Audio URL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=0;exitY=0.7;entryX=1;entryY=0.3;" edge="1" parent="1" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="490"/>
+              <mxPoint x="900" y="600"/>
+              <mxPoint x="480" y="600"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f9b" value="Play" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="p5" target="ui_audio">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="f10" value="Audio playback" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34C759;strokeWidth=2;fontSize=10;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.6;" edge="1" parent="1" source="ui_audio" target="user">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="675"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
