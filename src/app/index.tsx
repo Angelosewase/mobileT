@@ -19,7 +19,7 @@ import { useTheme } from "../context/ThemeContext";
 import { useUser } from "../context/UserContext";
 import { getDailyFact, getWordOfTheDay } from "../services/wordOfTheDay";
 import { lightImpact } from "../utils/haptics";
-import { QUICK_SEARCH_WORDS } from "../utils/validation";
+import { QUICK_SEARCH_WORDS } from "../utils/wordSuggestions";
 
 export default function Index() {
   const { colors } = useTheme();

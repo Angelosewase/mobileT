@@ -1,10 +1,3 @@
-export const QUICK_SEARCH_WORDS = [
-  "eloquent",
-  "ephemeral",
-  "resilient",
-  "luminous",
-] as const;
-
 const SINGLE_WORD_PATTERN = /^[a-zA-Z]+(?:[-'][a-zA-Z]+)*$/;
 
 export function isValidWord(input: string): boolean {
@@ -64,28 +57,4 @@ export function extractFirstWord(input: string): string | null {
   }
 
   return firstWord;
-}
-
-export function getSearchSuggestions(
-  input: string,
-  history: string[] = [],
-  limit = 5,
-): string[] {
-  const trimmed = input.trim().toLowerCase();
-
-  if (trimmed.length < 1) {
-    return [];
-  }
-
-  const pool = [
-    ...new Set([...history, ...QUICK_SEARCH_WORDS]),
-  ];
-
-  return pool
-    .filter(
-      (word) =>
-        word.toLowerCase().startsWith(trimmed) &&
-        word.toLowerCase() !== trimmed,
-    )
-    .slice(0, limit);
 }
